@@ -3,6 +3,7 @@ import view.EquipmentView;
 
 public class App {
     public static void main(String[] args) throws Exception {
+
         // Khởi tạo Controller
         EquipmentController controller = new EquipmentController();
         
@@ -11,5 +12,7 @@ public class App {
         
         // Hiển thị menu chính
         view.displayMenu();
+
     }
+    
 }

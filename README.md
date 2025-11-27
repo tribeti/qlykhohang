@@ -123,4 +123,3 @@ java -cp bin App
 - Dữ liệu được lưu trữ trong bộ nhớ (chương trình không lưu trữ vĩnh viễn vào file)
 - Để lưu trữ dữ liệu vĩnh viễn, sử dụng các lớp trong `util.DataPersistence`
 - Ứng dụng hỗ trợ nhập liệu tiếng Việt qua Terminal
-

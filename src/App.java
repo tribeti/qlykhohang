@@ -22,18 +22,18 @@ public class App extends JFrame {
         initUI();
     }
 
-    static void main(String[] args) {
-        // Setup giao diện FlatLaf trước khi tạo cửa sổ
-        try {
-            UIManager.setLookAndFeel(new FlatLightLaf());
-        } catch (Exception ex) {
-            System.err.println("Failed to initialize LaF");
-        }
+    public static void main(String[] args) {
+         try {
+             UIManager.setLookAndFeel(new FlatLightLaf());
+         } catch (Exception ex) {
+             System.err.println("Failed to initialize LaF");
+         }
 
-        // Chạy ứng dụng
-        SwingUtilities.invokeLater(() -> {
-            new App().setVisible(true);
-        });
+         // Chạy ứng dụng
+         SwingUtilities.invokeLater(() -> {
+             new App().setVisible(true);
+         });
+        
     }
 
     private void initUI() {

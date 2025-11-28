@@ -147,7 +147,7 @@ public class App extends JFrame {
         String dbUser = props.getProperty("USERNAME");
         String dbPass = props.getProperty("PASSWORD");
 
-        String url = "jdbc:mysql://" + dbUser + ":" + dbPass + "@" + host + ":" + port + "/" + database + "?sslMode=VERIFY_IDENTITY";
+        String url = "jdbc:mysql://" + host + ":" + port + "/" + database + "?sslMode=VERIFY_IDENTITY";
 
         try (Connection conn = DriverManager.getConnection(url, dbUser, dbPass)) {
             String sql = "SELECT * FROM users WHERE username = ? AND password = ?";

@@ -18,7 +18,7 @@ public class VatTuController {
     }
 
     public String themVatTu(String ten, int nccId, String dvt, String giaStr, String slStr, String moTa) {
-        if (ten.isEmpty()) return "Tên vật tư không được để trống!";
+        if (ten == null || ten.trim().isEmpty()) return "Tên vật tư không được để trống!";
         if (dvt.isEmpty()) return "Đơn vị tính không được để trống!";
 
         double gia;

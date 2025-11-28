@@ -18,7 +18,9 @@ public class MongoConnect {
         try (FileInputStream fis = new FileInputStream("env.properties")) {
             props.load(fis);
         } catch (IOException e) {
+            System.err.println("Failed to load configuration from env.properties. Exiting.");
             e.printStackTrace();
+            return; // or System.exit(1)
         }
 
         String mongodbUrl = props.getProperty("MONGODB_URL");

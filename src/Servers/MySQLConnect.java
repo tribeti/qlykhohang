@@ -23,7 +23,7 @@ public class MySQLConnect {
         String dbPass = props.getProperty("PASSWORD");
 
         try {
-            String url = "jdbc:mysql://" + dbUser + ":" + dbPass + "@" + host + ":" + port + "/" + database + "?sslMode=VERIFY_IDENTITY";
+            String url = "jdbc:mysql://" + host + ":" + port + "/" + database + "?sslMode=VERIFY_IDENTITY";
             return DriverManager.getConnection(url, dbUser, dbPass);
         } catch (Exception e) {
             e.printStackTrace();

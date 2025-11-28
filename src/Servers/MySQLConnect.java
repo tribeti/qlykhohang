@@ -28,7 +28,7 @@ public class MySQLConnect {
             return DriverManager.getConnection(url, dbUser, dbPass);
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            throw new RuntimeException("Failed to connect to the database", e);
         }
     }
 }

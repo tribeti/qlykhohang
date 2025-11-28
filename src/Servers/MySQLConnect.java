@@ -14,6 +14,7 @@ public class MySQLConnect {
             props.load(fis);
         } catch (IOException e) {
             e.printStackTrace();
+            throw new RuntimeException("Failed to load database configuration from env.properties", e);
         }
 
         String host = props.getProperty("HOST");

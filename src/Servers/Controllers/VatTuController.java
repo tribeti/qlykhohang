@@ -48,6 +48,7 @@ public class VatTuController {
         try {
             gia = Double.parseDouble(giaStr);
             soLuong = Integer.parseInt(slStr);
+            if (gia < 0 || soLuong < 0) return "Giá và số lượng phải >= 0";
         } catch (NumberFormatException e) {
             return "Giá hoặc Số lượng sai định dạng!";
         }

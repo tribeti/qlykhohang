@@ -33,7 +33,6 @@ public class NetworkController {
                 return;
             }
             String[] parts = line.split("\\|");
-            String[] parts = line.split("\\|");
 
             if (parts[0].equals("LOGIN")) {
                 String user = parts[1];

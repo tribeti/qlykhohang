@@ -24,7 +24,9 @@ public class LoginView extends JFrame {
         // --- Set Look & Feel ---
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception ignored) {}
+        } catch (Exception e) {
+            e.printStackTrace(); // Or use a proper logger
+        }
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(420, 280);

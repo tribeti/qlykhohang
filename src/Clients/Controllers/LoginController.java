@@ -16,7 +16,7 @@ public class LoginController {
     }
 
     private void initEvents() {
-        view.btnLogin.addActionListener(e -> login());
+        view.btnLogin.addActionListener(_ -> login());
     }
 
     private void login() {

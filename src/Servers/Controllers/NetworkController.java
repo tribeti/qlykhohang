@@ -29,6 +29,10 @@ public class NetworkController {
                 PrintWriter pw = new PrintWriter(socket.getOutputStream(), true)
         ) {
             String line = br.readLine();
+            if (line == null) {
+                return;
+            }
+            String[] parts = line.split("\\|");
             String[] parts = line.split("\\|");
 
             if (parts[0].equals("LOGIN")) {

@@ -1,4 +1,4 @@
-package Clients.View;
+package Clients.Views;
 
 import Clients.Controllers.LoginController;
 
@@ -7,12 +7,11 @@ import java.awt.*;
 
 public class LoginView extends JFrame {
 
+    private final LoginController controller;
     public JTextField txtUsername = new JTextField(20);
     public JPasswordField txtPassword = new JPasswordField(20);
     public JButton btnLogin = new JButton("Đăng nhập");
     public JLabel lblMessage = new JLabel(" ");
-
-    private LoginController controller;
 
     public LoginView() {
         super("Đăng nhập - Quản lý vật tư");
@@ -21,7 +20,6 @@ public class LoginView extends JFrame {
     }
 
     private void initUI() {
-        // --- Set Look & Feel ---
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {
@@ -48,24 +46,28 @@ public class LoginView extends JFrame {
         c.anchor = GridBagConstraints.WEST;
 
         // Username
-        c.gridx = 0; c.gridy = 0;
+        c.gridx = 0;
+        c.gridy = 0;
         form.add(new JLabel("Tài khoản:"), c);
         c.gridx = 1;
         form.add(txtUsername, c);
 
         // Password
-        c.gridx = 0; c.gridy = 1;
+        c.gridx = 0;
+        c.gridy = 1;
         form.add(new JLabel("Mật khẩu:"), c);
         c.gridx = 1;
         form.add(txtPassword, c);
 
         // Login Button
-        c.gridx = 1; c.gridy = 2;
+        c.gridx = 1;
+        c.gridy = 2;
         c.anchor = GridBagConstraints.CENTER;
         form.add(btnLogin, c);
 
         // Message Label
-        c.gridx = 1; c.gridy = 3;
+        c.gridx = 1;
+        c.gridy = 3;
         form.add(lblMessage, c);
 
         root.add(form, BorderLayout.CENTER);

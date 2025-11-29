@@ -5,10 +5,6 @@ import java.awt.*;
 
 public class MainView extends JFrame {
 
-    private JPanel sideMenu;
-    private JPanel contentPanel;
-    private CardLayout cardLayout;
-
     public MainView(String username) {
         super("Dashboard - Quản lý vật tư");
         initUI(username);
@@ -20,7 +16,7 @@ public class MainView extends JFrame {
         setLocationRelativeTo(null);
 
         // --- Side Menu ---
-        sideMenu = new JPanel();
+        JPanel sideMenu = new JPanel();
         sideMenu.setLayout(new BoxLayout(sideMenu, BoxLayout.Y_AXIS));
         sideMenu.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         sideMenu.setPreferredSize(new Dimension(220, getHeight()));
@@ -46,8 +42,8 @@ public class MainView extends JFrame {
         }
 
         // --- Content Panel ---
-        contentPanel = new JPanel();
-        cardLayout = new CardLayout();
+        JPanel contentPanel = new JPanel();
+        CardLayout cardLayout = new CardLayout();
         contentPanel.setLayout(cardLayout);
 
         // Add views
@@ -65,5 +61,33 @@ public class MainView extends JFrame {
         getContentPane().setLayout(new BorderLayout());
         getContentPane().add(sideMenu, BorderLayout.WEST);
         getContentPane().add(contentPanel, BorderLayout.CENTER);
+
+        btnDanhMuc.addActionListener(_ -> {
+            SwingUtilities.invokeLater(() -> {
+                setVisible(false);
+                new DanhMucView().setVisible(true);
+            });
+        });
+
+        btnNhapKho.addActionListener(_ -> {
+            SwingUtilities.invokeLater(() -> {
+                setVisible(false);
+                new NhapKhoView().setVisible(true);
+            });
+        });
+
+        btnThongKe.addActionListener(_ -> {
+            SwingUtilities.invokeLater(() -> {
+                setVisible(false);
+                new ThongKeView().setVisible(true);
+            });
+        });
+
+        btnXuatTon.addActionListener(_ -> {
+            SwingUtilities.invokeLater(() -> {
+                setVisible(false);
+                new XuatTonView().setVisible(true);
+            });
+        });
     }
 }

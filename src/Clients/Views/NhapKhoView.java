@@ -1,6 +1,4 @@
-package Clients.View;
-
-import Clients.Controllers.LoginController;
+package Clients.Views;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

@@ -1,4 +1,4 @@
-package Clients.View;
+package Clients.Views;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -27,7 +27,7 @@ public class DanhMucView extends JPanel {
         add(top, BorderLayout.NORTH);
 
         // --- Table ---
-        String[] cols = {"Mã", "Tên", "ĐVT", "SL tối thiểu", "Nhà cung cấp"};
+        String[] cols = {"Mã", "Tên vật tư", "Đơn vị tính", "Giá", "Số lượng", "Mô tả", "Nhà cung cấp"};
         model = new DefaultTableModel(cols, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {

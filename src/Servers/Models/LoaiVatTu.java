@@ -14,7 +14,7 @@ public class LoaiVatTu {
         this.tenloai = tenloai;
     }
 
-    public LoaiVatTu(String moTa, String tenloai) {
+    public LoaiVatTu(String tenloai, String moTa) {
         this.moTa = moTa;
         this.tenloai = tenloai;
     }

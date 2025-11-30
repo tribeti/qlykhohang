@@ -14,9 +14,9 @@ public class Kho {
         this.diaChi = diaChi;
     }
 
-    public Kho(String diaChi, String tenKho) {
-        this.diaChi = diaChi;
+    public Kho(String tenKho, String diaChi) {
         this.tenKho = tenKho;
+        this.diaChi = diaChi;
     }
 
     public int getId() {

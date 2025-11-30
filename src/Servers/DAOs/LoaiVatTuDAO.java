@@ -38,7 +38,7 @@ public class LoaiVatTuDAO {
         try (Connection conn = MySQLConnect.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, loaiVatTu.getTenloai());
+            stmt.setString(1, loaiVatTu.getTenLoai());
             stmt.setString(2, loaiVatTu.getMoTa());
             return stmt.executeUpdate() > 0;
         } catch (Exception e) {
@@ -52,7 +52,7 @@ public class LoaiVatTuDAO {
         try (Connection conn = MySQLConnect.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, loaiVatTu.getTenloai());
+            stmt.setString(1, loaiVatTu.getTenLoai());
             stmt.setString(2, loaiVatTu.getMoTa());
             stmt.setInt(3, loaiVatTu.getId());
             return stmt.executeUpdate() > 0;

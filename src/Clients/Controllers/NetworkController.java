@@ -9,6 +9,12 @@ import java.net.Socket;
 import java.net.SocketTimeoutException;
 
 public class NetworkController {
+    private String currentRole = "USER"; // Biến lưu role tạm thời
+
+    public String getCurrentRole() {
+        return currentRole;
+    }
+
     public LoginResult login(String user, String pass) {
         String host = "localhost";
         int port = 9999;
@@ -27,11 +33,17 @@ public class NetworkController {
                 return LoginResult.BAD_RESPONSE;
             }
 
-            return switch (response) {
-                case "OK" -> LoginResult.SUCCESS;
-                case "FAIL" -> LoginResult.WRONG_CREDENTIALS;
-                default -> LoginResult.BAD_RESPONSE;
-            };
+            if (response.startsWith("OK")) {
+                String[] parts = response.split("\\|");
+                if (parts.length > 1) {
+                    this.currentRole = parts[1]; // Lưu role server gửi về
+                }
+                return LoginResult.SUCCESS;
+            } else if (response.equals("FAIL")) {
+                return LoginResult.WRONG_CREDENTIALS;
+            } else {
+                return LoginResult.BAD_RESPONSE;
+            }
 
         } catch (ConnectException ce) {
             return LoginResult.SERVER_OFFLINE;

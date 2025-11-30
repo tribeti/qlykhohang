@@ -34,10 +34,11 @@ public class LoginController {
         switch (result) {
             case SUCCESS -> {
                 view.lblMessage.setText("Đăng nhập thành công!");
+                String role = net.getCurrentRole();
 
                 SwingUtilities.invokeLater(() -> {
                     view.setVisible(false);
-                    new MainView(username).setVisible(true);
+                    new MainView(username, role).setVisible(true);
                 });
             }
 

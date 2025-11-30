@@ -19,7 +19,6 @@ public class LoginView extends JFrame {
     public JPasswordField txtPassword;
     public JButton btnLogin;
     public JLabel lblMessage;
-    // Thêm checkbox
     public JCheckBox chkShowPass;
 
     public LoginView() {

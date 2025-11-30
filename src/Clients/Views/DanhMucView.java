@@ -1,7 +1,7 @@
 package Clients.Views;
 
 import Clients.Controllers.CoreController;
-import Clients.Models.VatTu;
+import Common.Models.VatTu;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -52,21 +52,15 @@ public class DanhMucView extends JPanel {
         bottom.add(btnDelete);
         add(bottom, BorderLayout.SOUTH);
 
-        // Gọi refresh dữ liệu khi load view
         loadData();
-
-        // Thêm sự kiện click nút Tải lại
-        btnRefresh.addActionListener(e -> loadData());
+        btnRefresh.addActionListener(_ -> loadData());
     }
 
     private void loadData() {
-        // Xóa dữ liệu cũ
         model.setRowCount(0);
 
-        // Tải dữ liệu trong thread riêng để không block UI
         SwingUtilities.invokeLater(() -> {
             try {
-                // Fetch dữ liệu từ server
                 List<VatTu> danhSach = controller.getDanhSachVatTu();
 
                 if (danhSach == null || danhSach.isEmpty()) {

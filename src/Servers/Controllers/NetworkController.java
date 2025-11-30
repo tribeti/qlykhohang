@@ -29,6 +29,7 @@ public class NetworkController {
 
     private void handleClient(Socket socket) {
         try (
+                socket;
                 ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
                 ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream())
         ) {
@@ -37,7 +38,7 @@ public class NetworkController {
                 return;
             }
 
-            String[] parts = request.split("\\|");
+            String[] parts = request.split("\\|", 3);
 
             if (parts[0].equals("LOGIN")) {
                 if (parts.length >= 3) {

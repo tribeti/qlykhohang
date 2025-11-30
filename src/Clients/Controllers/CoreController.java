@@ -1,6 +1,6 @@
 package Clients.Controllers;
 
-import Clients.Models.VatTu;
+import Common.Models.VatTu;
 
 import java.util.List;
 

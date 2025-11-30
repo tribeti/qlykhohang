@@ -1,6 +1,7 @@
 package Servers.DAOs;
 
-import Servers.Models.VatTu;
+
+import Common.Models.VatTu;
 import Servers.MySQLConnect;
 
 import java.sql.Connection;
@@ -26,10 +27,10 @@ public class VatTuDAO {
                         rs.getInt("nha_cung_cap_id"),
                         rs.getString("don_vi_tinh"),
                         rs.getDouble("gia_tien"),
+                        rs.getInt("so_luong"),
                         rs.getString("mo_ta"),
                         rs.getTimestamp("ngay_tao"),
-                        rs.getInt("kho_id"),
-                        rs.getInt("so_luong")
+                        rs.getInt("kho_id")
                 );
                 // Set tên NCC để hiển thị ra bảng
 //                vt.setTenNhaCungCap(rs.getString("ten_nha_cung_cap"));

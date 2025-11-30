@@ -2,7 +2,7 @@ package Servers.Models;
 
 public class LoaiVatTu {
     private int id;
-    private String tenloai;
+    private String tenLoai;
     private String moTa;
 
     public LoaiVatTu() {

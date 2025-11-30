@@ -13,10 +13,7 @@ public class VatTuDAO {
     public List<VatTu> getAll() {
         List<VatTu> list = new ArrayList<>();
 
-        String sql = "SELECT vt.*, n.ten_nha_cung_cap " +
-                "FROM vat_tu vt " +
-                "LEFT JOIN nha_cung_cap n ON vt.nha_cung_cap_id = n.id " +
-                "ORDER BY vt.id DESC";
+        String sql = "SELECT * FROM vat_tu";
 
         try (Connection conn = MySQLConnect.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
@@ -29,12 +26,13 @@ public class VatTuDAO {
                         rs.getInt("nha_cung_cap_id"),
                         rs.getString("don_vi_tinh"),
                         rs.getDouble("gia_tien"),
-                        rs.getInt("so_luong"),
                         rs.getString("mo_ta"),
-                        rs.getTimestamp("ngay_tao")
+                        rs.getTimestamp("ngay_tao"),
+                        rs.getInt("kho_id"),
+                        rs.getInt("so_luong")
                 );
                 // Set tên NCC để hiển thị ra bảng
-                vt.setTenNhaCungCap(rs.getString("ten_nha_cung_cap"));
+//                vt.setTenNhaCungCap(rs.getString("ten_nha_cung_cap"));
 
                 list.add(vt);
             }

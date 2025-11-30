@@ -11,21 +11,22 @@ public class VatTu {
     private int soLuong;
     private String moTa;
     private Timestamp ngayTao;
+    private int khoId;
     private String tenNhaCungCap;
 
     public VatTu() {
     }
 
-    public VatTu(int id, String tenVatTu, int nhaCungCapId, String donViTinh,
-                 double giaTien, int soLuong, String moTa, Timestamp ngayTao) {
+    public VatTu(int id, String tenVatTu, int nhaCungCapId, String donViTinh, double giaTien, String moTa, Timestamp ngayTao, int khoId, int soLuong) {
         this.id = id;
         this.tenVatTu = tenVatTu;
         this.nhaCungCapId = nhaCungCapId;
         this.donViTinh = donViTinh;
         this.giaTien = giaTien;
-        this.soLuong = soLuong;
         this.moTa = moTa;
         this.ngayTao = ngayTao;
+        this.khoId = khoId;
+        this.soLuong = soLuong;
     }
 
     public VatTu(String tenVatTu, int nhaCungCapId, String donViTinh,
@@ -110,16 +111,26 @@ public class VatTu {
         this.tenNhaCungCap = tenNhaCungCap;
     }
 
+    public int getKhoId() {
+        return khoId;
+    }
+
+    public void setKhoId(int khoId) {
+        this.khoId = khoId;
+    }
+
     @Override
     public String toString() {
         return "VatTu{" +
-                "tenVatTu='" + tenVatTu + '\'' +
+                "id=" + id +
+                ", tenVatTu='" + tenVatTu + '\'' +
                 ", nhaCungCapId=" + nhaCungCapId +
                 ", donViTinh='" + donViTinh + '\'' +
                 ", giaTien=" + giaTien +
                 ", soLuong=" + soLuong +
                 ", moTa='" + moTa + '\'' +
                 ", ngayTao=" + ngayTao +
+                ", khoId=" + khoId +
                 ", tenNhaCungCap='" + tenNhaCungCap + '\'' +
                 '}';
     }

@@ -8,15 +8,15 @@ public class LoaiVatTu {
     public LoaiVatTu() {
     }
 
-    public LoaiVatTu(int id, String tenloai, String moTa) {
+    public LoaiVatTu(int id, String tenLoai, String moTa) {
         this.id = id;
+        this.tenLoai = tenLoai;
         this.moTa = moTa;
-        this.tenloai = tenloai;
     }
 
-    public LoaiVatTu(String tenloai, String moTa) {
+    public LoaiVatTu(String tenLoai, String moTa) {
+        this.tenLoai = tenLoai;
         this.moTa = moTa;
-        this.tenloai = tenloai;
     }
 
     public int getId() {
@@ -35,19 +35,19 @@ public class LoaiVatTu {
         this.moTa = moTa;
     }
 
-    public String getTenloai() {
-        return tenloai;
+    public String getTenLoai() {
+        return tenLoai;
     }
 
-    public void setTenloai(String tenloai) {
-        this.tenloai = tenloai;
+    public void setTenLoai(String tenLoai) {
+        this.tenLoai = tenLoai;
     }
 
     @Override
     public String toString() {
         return "LoaiVatTu{" +
                 "id=" + id +
-                ", tenloai='" + tenloai + '\'' +
+                ", tenLoai='" + tenLoai + '\'' +
                 ", moTa='" + moTa + '\'' +
                 '}';
     }

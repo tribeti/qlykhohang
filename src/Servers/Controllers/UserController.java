@@ -10,9 +10,7 @@ public class UserController {
         this.dao = new UserDAO();
     }
 
-    public boolean Login(String inputUser, String inputPass) {
-        User u = dao.checkLogin(inputUser, inputPass);
-
-        return u != null;
+    public User Login(String inputUser, String inputPass) {
+        return dao.checkLogin(inputUser, inputPass);
     }
 }

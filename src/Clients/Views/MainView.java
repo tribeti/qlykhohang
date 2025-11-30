@@ -7,12 +7,12 @@ public class MainView extends JFrame {
     private CardLayout cardLayout;
     private JPanel contentPanel;
 
-    public MainView(String username) {
+    public MainView(String username, String role) {
         super("Dashboard - Quản lý vật tư");
-        initUI(username);
+        initUI(username, role);
     }
 
-    private void initUI(String username) {
+    private void initUI(String username, String role) {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1000, 650);
         setLocationRelativeTo(null);
@@ -35,6 +35,7 @@ public class MainView extends JFrame {
         JButton btnXuatTon = new JButton("Quản lý xuất kho - tồn");
         JButton btnThongKe = new JButton("Thống kê");
         JButton btnLogout = new JButton("Đăng xuất");
+        JButton btnQuanLyUser = getJButton(role);
 
         for (JButton b : new JButton[]{btnDanhMuc, btnNhapKho, btnXuatTon, btnThongKe, btnLogout}) {
             b.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -71,12 +72,30 @@ public class MainView extends JFrame {
         btnThongKe.addActionListener(_ -> cardLayout.show(contentPanel, "ThongKe"));
 
         btnLogout.addActionListener(_ -> {
-            // Xử lý đăng xuất
             this.dispose();
-            // Mở lại LoginView
             new LoginView().setVisible(true);
         });
 
+        if (btnQuanLyUser != null) {
+            sideMenu.add(btnQuanLyUser);
+            sideMenu.add(Box.createRigidArea(new Dimension(0, 6)));
+        }
+
         setVisible(true);
+    }
+
+    private JButton getJButton(String role) {
+        JButton btnQuanLyUser = null;
+
+        if (role != null && role.equalsIgnoreCase("ADMIN")) {
+            btnQuanLyUser = new JButton("Quản lý Tài khoản (Admin)");
+            btnQuanLyUser.setAlignmentX(Component.LEFT_ALIGNMENT);
+            btnQuanLyUser.setMaximumSize(new Dimension(Integer.MAX_VALUE, 36));
+            btnQuanLyUser.addActionListener(_ -> {
+                // cardLayout.show(contentPanel, "AdminPanel");
+                JOptionPane.showMessageDialog(this, "Tính năng chỉ dành cho Admin!");
+            });
+        }
+        return btnQuanLyUser;
     }
 }

@@ -1,5 +1,7 @@
 package Servers.Controllers;
 
+import Servers.Models.User;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -38,10 +40,12 @@ public class NetworkController {
                 String user = parts[1];
                 String pass = parts[2];
 
-                boolean ok = userController.Login(user, pass);
-
-                if (ok) pw.println("OK");
-                else pw.println("FAIL");
+                User u = userController.Login(user, pass);
+                if (u != null) {
+                    pw.println("OK|" + u.getRole());
+                } else {
+                    pw.println("FAIL");
+                }
             }
 
         } catch (Exception e) {

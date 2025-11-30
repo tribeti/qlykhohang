@@ -22,8 +22,8 @@ public class UserDAO {
             if (rs.next()) {
                 user = new User();
                 user.setId(rs.getInt("id"));
-                user.setUserName(rs.getString("username"));
-                user.setPassWord(rs.getString("password"));
+                user.setUsername(rs.getString("username"));
+                user.setPassword(rs.getString("password"));
             }
 
         } catch (SQLException e) {

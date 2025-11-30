@@ -1,6 +1,6 @@
 package Servers.DAOs;
 
-import Servers.Models.NhaCungCap;
+import Servers.Models.LoaiVatTu;
 import Servers.MySQLConnect;
 
 import java.sql.Connection;
@@ -9,24 +9,23 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NhaCungCapDAO {
+public class LoaiVatTuDAO {
 
-    public List<NhaCungCap> getAll() {
-        List<NhaCungCap> list = new ArrayList<>();
-        String sql = "SELECT * FROM nha_cung_cap";
+    public List<LoaiVatTu> getAll() {
+        List<LoaiVatTu> list = new ArrayList<>();
+        String sql = "SELECT * FROM loai_vat_tu";
 
         try (Connection conn = MySQLConnect.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
-                NhaCungCap ncc = new NhaCungCap(
+                LoaiVatTu loaiVatTu = new LoaiVatTu(
                         rs.getInt("id"),
-                        rs.getString("ten_nha_cung_cap"),
-                        rs.getString("email"),
-                        rs.getString("dia_chi")
+                        rs.getString("ten_loai"),
+                        rs.getString("mo_ta")
                 );
-                list.add(ncc);
+                list.add(loaiVatTu);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -34,16 +33,13 @@ public class NhaCungCapDAO {
         return list;
     }
 
-    public boolean add(NhaCungCap ncc) {
-        String sql = "INSERT INTO nha_cung_cap (ten_nha_cung_cap, email, dia_chi) VALUES (?, ?, ?)";
-
+    public boolean add(LoaiVatTu loaiVatTu) {
+        String sql = "INSERT INTO loai_vat_tu (ten_loai,mo_ta) VALUE (?,?)";
         try (Connection conn = MySQLConnect.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, ncc.getTenNhaCungCap());
-            stmt.setString(2, ncc.getEmail());
-            stmt.setString(3, ncc.getDiaChi());
-
+            stmt.setString(1, loaiVatTu.getTenloai());
+            stmt.setString(2, loaiVatTu.getMoTa());
             return stmt.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();
@@ -51,17 +47,14 @@ public class NhaCungCapDAO {
         }
     }
 
-    public boolean update(NhaCungCap ncc) {
-        String sql = "UPDATE nha_cung_cap SET ten_nha_cung_cap = ?, email = ?, dia_chi = ? WHERE id = ?";
-
+    public boolean update(LoaiVatTu loaiVatTu) {
+        String sql = "UPDATE loai_vat_tu SET ten_loai = ?, mo_ta = ? WHERE id = ?";
         try (Connection conn = MySQLConnect.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, ncc.getTenNhaCungCap());
-            stmt.setString(2, ncc.getEmail());
-            stmt.setString(3, ncc.getDiaChi());
-            stmt.setInt(4, ncc.getId());
-
+            stmt.setString(1, loaiVatTu.getTenloai());
+            stmt.setString(2, loaiVatTu.getMoTa());
+            stmt.setInt(3, loaiVatTu.getId());
             return stmt.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();
@@ -70,11 +63,10 @@ public class NhaCungCapDAO {
     }
 
     public boolean delete(int id) {
-        String sql = "DELETE FROM nha_cung_cap WHERE id = ?";
-
+        String sql = "DELETE FROM loai_vat_tu WHERE id = ?";
         try (Connection conn = MySQLConnect.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-            
+
             stmt.setInt(1, id);
             return stmt.executeUpdate() > 0;
         } catch (Exception e) {

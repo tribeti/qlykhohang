@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainView extends JFrame {
+    private CardLayout cardLayout;
+    private JPanel contentPanel;
 
     public MainView(String username) {
         super("Dashboard - Quản lý vật tư");
@@ -42,8 +44,8 @@ public class MainView extends JFrame {
         }
 
         // --- Content Panel ---
-        JPanel contentPanel = new JPanel();
-        CardLayout cardLayout = new CardLayout();
+        contentPanel = new JPanel();
+        cardLayout = new CardLayout();
         contentPanel.setLayout(cardLayout);
 
         // Add views
@@ -62,32 +64,19 @@ public class MainView extends JFrame {
         getContentPane().add(sideMenu, BorderLayout.WEST);
         getContentPane().add(contentPanel, BorderLayout.CENTER);
 
-        btnDanhMuc.addActionListener(_ -> {
-            SwingUtilities.invokeLater(() -> {
-                setVisible(false);
-                new DanhMucView().setVisible(true);
-            });
+        // Button listeners - chỉ cần gọi cardLayout.show()
+        btnDanhMuc.addActionListener(_ -> cardLayout.show(contentPanel, "DanhMuc"));
+        btnNhapKho.addActionListener(_ -> cardLayout.show(contentPanel, "NhapKho"));
+        btnXuatTon.addActionListener(_ -> cardLayout.show(contentPanel, "XuatTon"));
+        btnThongKe.addActionListener(_ -> cardLayout.show(contentPanel, "ThongKe"));
+
+        btnLogout.addActionListener(_ -> {
+            // Xử lý đăng xuất
+            this.dispose();
+            // Mở lại LoginView
+            new LoginView().setVisible(true);
         });
 
-        btnNhapKho.addActionListener(_ -> {
-            SwingUtilities.invokeLater(() -> {
-                setVisible(false);
-                new NhapKhoView().setVisible(true);
-            });
-        });
-
-        btnThongKe.addActionListener(_ -> {
-            SwingUtilities.invokeLater(() -> {
-                setVisible(false);
-                new ThongKeView().setVisible(true);
-            });
-        });
-
-        btnXuatTon.addActionListener(_ -> {
-            SwingUtilities.invokeLater(() -> {
-                setVisible(false);
-                new XuatTonView().setVisible(true);
-            });
-        });
+        setVisible(true);
     }
 }

@@ -8,7 +8,7 @@ public class LoaiVatTu {
     public LoaiVatTu() {
     }
 
-    public LoaiVatTu(int id, String moTa, String tenloai) {
+    public LoaiVatTu(int id, String tenloai, String moTa) {
         this.id = id;
         this.moTa = moTa;
         this.tenloai = tenloai;

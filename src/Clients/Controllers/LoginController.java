@@ -23,8 +23,7 @@ public class LoginController {
         String username = view.txtUsername.getText();
         String password = new String(view.txtPassword.getPassword());
 
-        // ví dụ validate đơn giản
-        if (username.isEmpty() || password.isEmpty()) {
+        if (username.isBlank() || password.isBlank()) {
             view.lblMessage.setText("Vui lòng nhập đầy đủ thông tin!");
             return;
         }

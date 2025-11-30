@@ -1,15 +1,17 @@
 package Clients.Views;
 
+import Clients.Controllers.CoreController;
+import Clients.Models.VatTu;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.util.List;
 
 public class DanhMucView extends JPanel {
 
-    private JTable table;
+    private final CoreController controller = new CoreController();
     private DefaultTableModel model;
-    private JTextField txtSearch;
-    private JButton btnAdd, btnEdit, btnDelete;
 
     public DanhMucView() {
         setLayout(new BorderLayout());
@@ -19,11 +21,13 @@ public class DanhMucView extends JPanel {
     private void initComponents() {
         // --- Top panel: search ---
         JPanel top = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        txtSearch = new JTextField(20);
+        JTextField txtSearch = new JTextField(20);
         JButton btnSearch = new JButton("Tìm");
+        JButton btnRefresh = new JButton("Tải lại");
         top.add(new JLabel("Tìm:"));
         top.add(txtSearch);
         top.add(btnSearch);
+        top.add(btnRefresh);
         add(top, BorderLayout.NORTH);
 
         // --- Table ---
@@ -34,21 +38,59 @@ public class DanhMucView extends JPanel {
                 return false;
             }
         };
-        table = new JTable(model);
+        JTable table = new JTable(model);
         table.setFillsViewportHeight(true);
         add(new JScrollPane(table), BorderLayout.CENTER);
 
         // --- Bottom panel: buttons ---
         JPanel bottom = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        btnAdd = new JButton("Thêm");
-        btnEdit = new JButton("Sửa");
-        btnDelete = new JButton("Xóa");
+        JButton btnAdd = new JButton("Thêm");
+        JButton btnEdit = new JButton("Sửa");
+        JButton btnDelete = new JButton("Xóa");
         bottom.add(btnAdd);
         bottom.add(btnEdit);
         bottom.add(btnDelete);
         add(bottom, BorderLayout.SOUTH);
 
-        // --- Sample data ---
-        model.addRow(new Object[]{"VT001", "Tua vít", "Cái", 5, "Công ty A"});
+        // Gọi refresh dữ liệu khi load view
+        loadData();
+
+        // Thêm sự kiện click nút Tải lại
+        btnRefresh.addActionListener(e -> loadData());
+    }
+
+    private void loadData() {
+        // Xóa dữ liệu cũ
+        model.setRowCount(0);
+
+        // Tải dữ liệu trong thread riêng để không block UI
+        SwingUtilities.invokeLater(() -> {
+            try {
+                // Fetch dữ liệu từ server
+                List<VatTu> danhSach = controller.getDanhSachVatTu();
+
+                if (danhSach == null || danhSach.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Không có dữ liệu hoặc không thể kết nối server!",
+                            "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                    return;
+                }
+
+                // Đổ dữ liệu vào bảng
+                for (VatTu vt : danhSach) {
+                    model.addRow(new Object[]{
+                            vt.getId(),
+                            vt.getTenVatTu(),
+                            vt.getDonViTinh(),
+                            vt.getGiaTien(),
+                            vt.getSoLuong(),
+                            vt.getMoTa(),
+                            vt.getNhaCungCapId()
+                    });
+                }
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Lỗi khi tải dữ liệu: " + ex.getMessage(),
+                        "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+        });
     }
 }

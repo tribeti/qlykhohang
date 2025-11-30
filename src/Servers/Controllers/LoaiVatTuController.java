@@ -37,7 +37,7 @@ public class LoaiVatTuController {
 
         LoaiVatTu loaiVatTu = new LoaiVatTu();
         loaiVatTu.setId(id);
-        loaiVatTu.setTenloai(tenLoai);
+        loaiVatTu.setTenLoai(tenLoai);
         loaiVatTu.setMoTa(moTa);
 
         if (dao.update(loaiVatTu)) {

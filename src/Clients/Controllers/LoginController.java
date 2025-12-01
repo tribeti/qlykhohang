@@ -1,11 +1,14 @@
 package Clients.Controllers;
 
-import Clients.View.LoginView;
+import Clients.Views.LoginView;
+import Clients.Views.MainView;
+
 import javax.swing.*;
 
 public class LoginController {
 
-    private LoginView view;
+    private final LoginView view;
+    private final NetworkController net = new NetworkController();
 
     public LoginController(LoginView view) {
         this.view = view;
@@ -13,31 +16,35 @@ public class LoginController {
     }
 
     private void initEvents() {
-        view.btnLogin.addActionListener(e -> login());
+        view.btnLogin.addActionListener(_ -> login());
     }
 
     private void login() {
         String username = view.txtUsername.getText();
         String password = new String(view.txtPassword.getPassword());
 
-        // ví dụ validate đơn giản
-        if(username.isEmpty() || password.isEmpty()) {
+        if (username.isBlank() || password.isBlank()) {
             view.lblMessage.setText("Vui lòng nhập đầy đủ thông tin!");
             return;
         }
 
-        // TODO: gọi server để kiểm tra
-        boolean success = username.equals("admin") && password.equals("123"); 
+        LoginResult result = net.login(username, password);
 
-        if(success) {
-            view.lblMessage.setText("Đăng nhập thành công!");
-            // mở MainView
-            SwingUtilities.invokeLater(() -> {
-                view.setVisible(false);
-                new MainView(username).setVisible(true);
-            });
-        } else {
-            view.lblMessage.setText("Sai tài khoản hoặc mật khẩu!");
+        switch (result) {
+            case SUCCESS -> {
+                view.lblMessage.setText("Đăng nhập thành công!");
+                String role = net.getCurrentRole();
+
+                SwingUtilities.invokeLater(() -> {
+                    view.setVisible(false);
+                    new MainView(username, role).setVisible(true);
+                });
+            }
+
+            case WRONG_CREDENTIALS -> view.lblMessage.setText("Sai tài khoản hoặc mật khẩu!");
+            case SERVER_OFFLINE -> view.lblMessage.setText("Server không hoạt động!");
+            case CONNECTION_FAILED -> view.lblMessage.setText("Lỗi kết nối đến server!");
+            case BAD_RESPONSE -> view.lblMessage.setText("Server trả dữ liệu không hợp lệ!");
         }
     }
 }

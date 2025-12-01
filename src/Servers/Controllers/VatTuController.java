@@ -1,7 +1,7 @@
 package Servers.Controllers;
 
+import Common.Models.VatTu;
 import Servers.DAOs.VatTuDAO;
-import Servers.Models.VatTu;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ public class VatTuController {
         return dao.getAll();
     }
 
-    public String themVatTu(String ten, int nccId, String dvt, String giaStr, String slStr, String moTa) {
+    public String themVatTu(String ten, int nccId, String dvt, String giaStr, String slStr, String moTa, int khoId) {
         if (ten == null || ten.trim().isEmpty()) return "Tên vật tư không được để trống!";
         if (dvt == null || dvt.isEmpty()) return "Đơn vị tính không được để trống!";
 
@@ -31,7 +31,7 @@ public class VatTuController {
             return "Giá tiền hoặc Số lượng phải là số!";
         }
 
-        VatTu vt = new VatTu(ten, nccId, dvt, gia, soLuong, moTa);
+        VatTu vt = new VatTu(ten, nccId, dvt, gia, soLuong, moTa, khoId);
 
         if (dao.add(vt)) {
             return "Thành công";
@@ -68,7 +68,7 @@ public class VatTuController {
             return "Lỗi cập nhật!";
         }
     }
-    
+
     public String xoaVatTu(int id) {
         if (dao.delete(id)) {
             return "Thành công";

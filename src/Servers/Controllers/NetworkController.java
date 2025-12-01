@@ -1,5 +1,7 @@
 package Servers.Controllers;
 
+import Common.Models.Kho;
+import Common.Models.NhaCungCap;
 import Common.Models.VatTu;
 import Servers.Models.User;
 
@@ -12,6 +14,8 @@ import java.util.List;
 public class NetworkController {
     private final UserController userController = new UserController();
     private final VatTuController vatTuController = new VatTuController();
+    private final KhoController khoController = new KhoController();
+    private final NhaCungCapController nccController = new NhaCungCapController();
 
     public void startServer() {
         try (ServerSocket server = new ServerSocket(9999)) {
@@ -96,6 +100,72 @@ public class NetworkController {
                             try {
                                 int id = Integer.parseInt(parts[1]);
                                 String result = vatTuController.xoaVatTu(id);
+                                oos.writeObject(result);
+                            } catch (NumberFormatException e) {
+                                oos.writeObject("Lỗi: ID không hợp lệ");
+                            }
+                        } else {
+                            oos.writeObject("Lỗi: Thiếu ID");
+                        }
+                    }
+                    case "FETCH_KHO" -> {
+                        System.out.println("Server: Received FETCH_KHO request. Fetching data...");
+                        List<Kho> danhSach = khoController.getKhoList();
+                        System.out.println("Server: Found " + danhSach.size() + " khos. Sending to client...");
+                        oos.writeObject(danhSach);
+                    }
+                    case "ADD_KHO" -> {
+                        String tenKho = (String) ois.readObject();
+                        String diaChi = (String) ois.readObject();
+                        String result = khoController.themKho(tenKho, diaChi);
+                        oos.writeObject(result);
+                    }
+                    case "UPDATE_KHO" -> {
+                        int id = (int) ois.readObject();
+                        String tenKho = (String) ois.readObject();
+                        String diaChi = (String) ois.readObject();
+                        String result = khoController.suaKho(id, tenKho, diaChi);
+                        oos.writeObject(result);
+                    }
+                    case "DELETE_KHO" -> {
+                        if (parts.length > 1) {
+                            try {
+                                int id = Integer.parseInt(parts[1]);
+                                String result = khoController.xoaKho(id);
+                                oos.writeObject(result);
+                            } catch (NumberFormatException e) {
+                                oos.writeObject("Lỗi: ID không hợp lệ");
+                            }
+                        } else {
+                            oos.writeObject("Lỗi: Thiếu ID");
+                        }
+                    }
+                    case "FETCH_NCC" -> {
+                        System.out.println("Server: Received FETCH_NCC request. Fetching data...");
+                        List<NhaCungCap> danhSach = nccController.getDanhSachNCC();
+                        System.out.println("Server: Found " + danhSach.size() + " NCCs. Sending to client...");
+                        oos.writeObject(danhSach);
+                    }
+                    case "ADD_NCC" -> {
+                        String ten = (String) ois.readObject();
+                        String email = (String) ois.readObject();
+                        String diaChi = (String) ois.readObject();
+                        String result = nccController.themNCC(ten, email, diaChi);
+                        oos.writeObject(result);
+                    }
+                    case "UPDATE_NCC" -> {
+                        int id = (int) ois.readObject();
+                        String ten = (String) ois.readObject();
+                        String email = (String) ois.readObject();
+                        String diaChi = (String) ois.readObject();
+                        String result = nccController.suaNCC(id, ten, email, diaChi);
+                        oos.writeObject(result);
+                    }
+                    case "DELETE_NCC" -> {
+                        if (parts.length > 1) {
+                            try {
+                                int id = Integer.parseInt(parts[1]);
+                                String result = nccController.xoaNCC(id);
                                 oos.writeObject(result);
                             } catch (NumberFormatException e) {
                                 oos.writeObject("Lỗi: ID không hợp lệ");

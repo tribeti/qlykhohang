@@ -1,6 +1,6 @@
 package Servers.DAOs;
 
-import Servers.Models.Kho;
+import Common.Models.Kho;
 import Servers.MySQLConnect;
 
 import java.sql.Connection;

@@ -1,6 +1,12 @@
-package Servers.Models;
+package Common.Models;
 
-public class Kho {
+import java.io.Serial;
+import java.io.Serializable;
+
+public class Kho implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
+    
     private int id;
     private String tenKho;
     private String diaChi;

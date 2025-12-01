@@ -1,7 +1,7 @@
 package Servers.Controllers;
 
+import Common.Models.NhaCungCap;
 import Servers.DAOs.NhaCungCapDAO;
-import Servers.Models.NhaCungCap;
 
 import java.util.List;
 

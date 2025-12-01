@@ -5,10 +5,8 @@ public class CoreController {
     static void main() {
         NhaCungCapController nhaCungCapController = new NhaCungCapController();
         NetworkController networkController = new NetworkController();
-        KhoController khoController = new KhoController();
 
         System.out.println(nhaCungCapController.getDanhSachNCC());
-        System.out.println(khoController.getKhoList());
         networkController.startServer();
     }
 }

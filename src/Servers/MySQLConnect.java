@@ -17,8 +17,7 @@ public class MySQLConnect {
         Properties props = new Properties();
 
         // Đọc cấu hình từ file env.properties
-        try (FileInputStream fis = new FileInputStream(
-                "D:\\am22_Quynh\\LapTrinhMang\\BTH\\env.properties")) {
+        try (FileInputStream fis = new FileInputStream("env.properties")) {
             props.load(fis);
         } catch (IOException e) {
             e.printStackTrace();

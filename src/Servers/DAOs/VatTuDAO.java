@@ -47,8 +47,8 @@ public class VatTuDAO {
 
     // 2. Thêm mới
     public boolean add(VatTu vt) {
-        String sql = "INSERT INTO vat_tu (ten_vat_tu, nha_cung_cap_id, don_vi_tinh, gia_tien, so_luong, mo_ta) " +
-                "VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO vat_tu (ten_vat_tu, nha_cung_cap_id, don_vi_tinh, gia_tien, so_luong, mo_ta, ngay_tao, kho_id, tinh_trang) " +
+                "VALUES (?, ?, ?, ?, ?, ? ,?, ?, ?)";
 
         try (Connection conn = MySQLConnect.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -66,6 +66,9 @@ public class VatTuDAO {
             stmt.setDouble(4, vt.getGiaTien());
             stmt.setInt(5, vt.getSoLuong());
             stmt.setString(6, vt.getMoTa());
+            stmt.setObject(7, vt.getNgayTao());
+            stmt.setInt(8, vt.getKhoId());
+            stmt.setBoolean(9, vt.isTinhTrang());
 
             return stmt.executeUpdate() > 0;
         } catch (Exception e) {
@@ -77,13 +80,12 @@ public class VatTuDAO {
     // 3. Cập nhật
     public boolean update(VatTu vt) {
         String sql = "UPDATE vat_tu SET ten_vat_tu=?, nha_cung_cap_id=?, don_vi_tinh=?, " +
-                "gia_tien=?, so_luong=?, mo_ta=? WHERE id=?";
+                "gia_tien=?, so_luong=?, mo_ta=?, ngay_tao=?, kho_id=?, tinh_trang=? WHERE id=?";
 
         try (Connection conn = MySQLConnect.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, vt.getTenVatTu());
-
             if (vt.getNhaCungCapId() > 0) {
                 stmt.setInt(2, vt.getNhaCungCapId());
             } else {
@@ -94,8 +96,11 @@ public class VatTuDAO {
             stmt.setDouble(4, vt.getGiaTien());
             stmt.setInt(5, vt.getSoLuong());
             stmt.setString(6, vt.getMoTa());
-            stmt.setInt(7, vt.getId());
-
+            stmt.setObject(7, vt.getNgayTao());
+            stmt.setInt(8, vt.getKhoId());
+            stmt.setBoolean(9, vt.isTinhTrang());
+            stmt.setInt(10, vt.getId());
+            
             return stmt.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();

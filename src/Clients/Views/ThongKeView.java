@@ -25,3 +25,5 @@ public class ThongKeView extends JPanel {
         add(center, BorderLayout.CENTER);
     }
 }
+
+// TODO : thong ke so san pham ban va nhap trong khoang thoi gian nao do.

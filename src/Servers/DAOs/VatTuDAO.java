@@ -7,6 +7,7 @@ import Servers.MySQLConnect;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,8 +30,9 @@ public class VatTuDAO {
                         rs.getDouble("gia_tien"),
                         rs.getInt("so_luong"),
                         rs.getString("mo_ta"),
-                        rs.getTimestamp("ngay_tao"),
-                        rs.getInt("kho_id")
+                        rs.getObject("ngay_tao", LocalDateTime.class),
+                        rs.getInt("kho_id"),
+                        rs.getBoolean("tinh_trang")
                 );
                 // Set tên NCC để hiển thị ra bảng
 //                vt.setTenNhaCungCap(rs.getString("ten_nha_cung_cap"));

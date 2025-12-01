@@ -2,7 +2,7 @@ package Common.Models;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class VatTu implements Serializable {
     @Serial
@@ -15,13 +15,14 @@ public class VatTu implements Serializable {
     private double giaTien;
     private int soLuong;
     private String moTa;
-    private Timestamp ngayTao;
+    private LocalDateTime ngayTao;
     private int khoId;
+    private boolean tinhTrang;
 
     public VatTu() {
     }
 
-    public VatTu(int id, String tenVatTu, int nhaCungCapId, String donViTinh, double giaTien, int soLuong, String moTa, Timestamp ngayTao, int khoId) {
+    public VatTu(int id, String tenVatTu, int nhaCungCapId, String donViTinh, double giaTien, int soLuong, String moTa, LocalDateTime ngayTao, int khoId, boolean tinhTrang) {
         this.id = id;
         this.tenVatTu = tenVatTu;
         this.nhaCungCapId = nhaCungCapId;
@@ -31,16 +32,19 @@ public class VatTu implements Serializable {
         this.moTa = moTa;
         this.ngayTao = ngayTao;
         this.khoId = khoId;
+        this.tinhTrang = tinhTrang;
     }
 
-    public VatTu(String tenVatTu, int nhaCungCapId, String donViTinh, double giaTien, int soLuong, String moTa, int khoId) {
+    public VatTu(String tenVatTu, int nhaCungCapId, String donViTinh, double giaTien, int soLuong, String moTa, LocalDateTime ngayTao, int khoId, boolean tinhTrang) {
         this.tenVatTu = tenVatTu;
         this.nhaCungCapId = nhaCungCapId;
         this.donViTinh = donViTinh;
         this.giaTien = giaTien;
         this.soLuong = soLuong;
         this.moTa = moTa;
+        this.ngayTao = ngayTao;
         this.khoId = khoId;
+        this.tinhTrang = tinhTrang;
     }
 
     public int getId() {
@@ -59,11 +63,11 @@ public class VatTu implements Serializable {
         this.khoId = khoId;
     }
 
-    public Timestamp getNgayTao() {
+    public LocalDateTime getNgayTao() {
         return ngayTao;
     }
 
-    public void setNgayTao(Timestamp ngayTao) {
+    public void setNgayTao(LocalDateTime ngayTao) {
         this.ngayTao = ngayTao;
     }
 
@@ -113,6 +117,14 @@ public class VatTu implements Serializable {
 
     public void setNhaCungCapId(int nhaCungCapId) {
         this.nhaCungCapId = nhaCungCapId;
+    }
+
+    public boolean isTinhTrang() {
+        return tinhTrang;
+    }
+
+    public void setTinhTrang(boolean tinhTrang) {
+        this.tinhTrang = tinhTrang;
     }
 
     @Override

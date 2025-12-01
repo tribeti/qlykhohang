@@ -6,6 +6,7 @@ import Common.Models.VatTu;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class DanhMucView extends JPanel {
@@ -31,7 +32,7 @@ public class DanhMucView extends JPanel {
         add(top, BorderLayout.NORTH);
 
         // --- Table ---
-        String[] cols = {"Mã", "Tên vật tư", "Đơn vị tính", "Giá", "Số lượng", "Mô tả", "Nhà cung cấp"};
+        String[] cols = {"Mã", "Tên vật tư", "Đơn vị tính", "Giá", "Số lượng", "Mô tả", "Nhà cung cấp", "Kho ID", "Ngày tạo", "Tình trạng"};
         model = new DefaultTableModel(cols, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -68,9 +69,15 @@ public class DanhMucView extends JPanel {
                             "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                     return;
                 }
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
-                // Đổ dữ liệu vào bảng
+
                 for (VatTu vt : danhSach) {
+                    String ngayTaoHienThi = "";
+                    if (vt.getNgayTao() != null) {
+                        ngayTaoHienThi = vt.getNgayTao().format(formatter);
+                    }
+
                     model.addRow(new Object[]{
                             vt.getId(),
                             vt.getTenVatTu(),
@@ -78,7 +85,10 @@ public class DanhMucView extends JPanel {
                             vt.getGiaTien(),
                             vt.getSoLuong(),
                             vt.getMoTa(),
-                            vt.getNhaCungCapId()
+                            vt.getNhaCungCapId(),
+                            vt.getKhoId(),
+                            ngayTaoHienThi,
+                            vt.isTinhTrang() ? "Tốt" : "Hư hỏng"
                     });
                 }
             } catch (Exception ex) {

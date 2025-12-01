@@ -41,7 +41,7 @@ public class VatTuController {
         }
     }
 
-    public String suaVatTu(int id, String ten, int nccId, String dvt, String giaStr, String slStr, String moTa) {
+    public String suaVatTu(int id, String ten, int nccId, String dvt, String giaStr, String slStr, String moTa, LocalDateTime ngayTao, int khoId, boolean tinhTrang) {
         if (ten.isEmpty()) return "Tên vật tư rỗng!";
 
         double gia;
@@ -62,6 +62,9 @@ public class VatTuController {
         vt.setGiaTien(gia);
         vt.setSoLuong(soLuong);
         vt.setMoTa(moTa);
+        vt.setNgayTao(ngayTao);
+        vt.setKhoId(khoId);
+        vt.setTinhTrang(tinhTrang);
 
         if (dao.update(vt)) {
             return "Thành công";

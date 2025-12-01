@@ -18,7 +18,7 @@ public class VatTuController {
         return dao.getAll();
     }
 
-    public String themVatTu(String ten, int nccId, String dvt, String giaStr, String slStr, String moTa, LocalDateTime ngayTao, int khoId) {
+    public String themVatTu(String ten, int nccId, String dvt, String giaStr, String slStr, String moTa, LocalDateTime ngayTao, int khoId, boolean tinhTrang) {
         if (ten == null || ten.trim().isEmpty()) return "Tên vật tư không được để trống!";
         if (dvt == null || dvt.isEmpty()) return "Đơn vị tính không được để trống!";
 
@@ -32,7 +32,7 @@ public class VatTuController {
             return "Giá tiền hoặc Số lượng phải là số!";
         }
 
-        VatTu vt = new VatTu(ten, nccId, dvt, gia, soLuong, moTa, ngayTao, khoId, true);
+        VatTu vt = new VatTu(ten, nccId, dvt, gia, soLuong, moTa, ngayTao, khoId, tinhTrang);
 
         if (dao.add(vt)) {
             return "Thành công";

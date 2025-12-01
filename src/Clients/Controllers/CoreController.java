@@ -14,4 +14,16 @@ public class CoreController {
     public List<VatTu> getDanhSachVatTu() {
         return networkController.fetchProducts();
     }
+
+    public String themVatTu(VatTu vatTu) {
+        return networkController.addProduct(vatTu);
+    }
+
+    public String suaVatTu(VatTu vatTu) {
+        return networkController.updateProduct(vatTu);
+    }
+
+    public String xoaVatTu(int id) {
+        return networkController.deleteProduct(id);
+    }
 }

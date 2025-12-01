@@ -98,4 +98,72 @@ public class NetworkController {
             return new ArrayList<>();
         }
     }
+
+    public String addProduct(VatTu vatTu) {
+        String host = "localhost";
+        int port = 9999;
+        try (
+                Socket socket = new Socket(host, port);
+                ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+                ObjectInputStream ois = new ObjectInputStream(socket.getInputStream())
+        ) {
+            socket.setSoTimeout(5000);
+            oos.writeObject("ADD_PRODUCT");
+            oos.writeObject(vatTu);
+            oos.flush();
+            String response = (String) ois.readObject();
+            return response != null ? response : "Lỗi: Không nhận được phản hồi từ server";
+        } catch (ConnectException ce) {
+            return "Lỗi: Server offline";
+        } catch (SocketTimeoutException te) {
+            return "Lỗi: Kết nối timeout";
+        } catch (IOException | ClassNotFoundException e) {
+            return "Lỗi: " + e.getMessage();
+        }
+    }
+
+    public String updateProduct(VatTu vatTu) {
+        String host = "localhost";
+        int port = 9999;
+        try (
+                Socket socket = new Socket(host, port);
+                ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+                ObjectInputStream ois = new ObjectInputStream(socket.getInputStream())
+        ) {
+            socket.setSoTimeout(5000);
+            oos.writeObject("UPDATE_PRODUCT");
+            oos.writeObject(vatTu);
+            oos.flush();
+            String response = (String) ois.readObject();
+            return response != null ? response : "Lỗi: Không nhận được phản hồi từ server";
+        } catch (ConnectException ce) {
+            return "Lỗi: Server offline";
+        } catch (SocketTimeoutException te) {
+            return "Lỗi: Kết nối timeout";
+        } catch (IOException | ClassNotFoundException e) {
+            return "Lỗi: " + e.getMessage();
+        }
+    }
+
+    public String deleteProduct(int id) {
+        String host = "localhost";
+        int port = 9999;
+        try (
+                Socket socket = new Socket(host, port);
+                ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+                ObjectInputStream ois = new ObjectInputStream(socket.getInputStream())
+        ) {
+            socket.setSoTimeout(5000);
+            oos.writeObject("DELETE_PRODUCT|" + id);
+            oos.flush();
+            String response = (String) ois.readObject();
+            return response != null ? response : "Lỗi: Không nhận được phản hồi từ server";
+        } catch (ConnectException ce) {
+            return "Lỗi: Server offline";
+        } catch (SocketTimeoutException te) {
+            return "Lỗi: Kết nối timeout";
+        } catch (IOException | ClassNotFoundException e) {
+            return "Lỗi: " + e.getMessage();
+        }
+    }
 }

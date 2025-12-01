@@ -70,7 +70,8 @@ public class NetworkController {
                                 String.valueOf(vatTu.getSoLuong()),
                                 vatTu.getMoTa(),
                                 vatTu.getNgayTao(),
-                                vatTu.getKhoId()
+                                vatTu.getKhoId(),
+                                vatTu.isTinhTrang()
                         );
                         oos.writeObject(result);
                     }

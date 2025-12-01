@@ -1,12 +1,10 @@
 package Clients.Views;
 
-
 import javax.swing.*;
-import java.awt.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 
-
-public class BaoCaoTonKhoView extends JFrame {
+public class BaoCaoTonKhoView extends JPanel {
 
     // Form fields
     public JComboBox<String> cboKho;
@@ -25,36 +23,31 @@ public class BaoCaoTonKhoView extends JFrame {
     public DefaultTableModel tblModel;
 
     public BaoCaoTonKhoView() {
-        setTitle("Báo Cáo Tồn Kho");
-        setSize(900, 600);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new BorderLayout(10, 10));
 
-        setLayout(new BorderLayout());
+        // ======= PANEL FORM + BUTTON =======
+        JPanel topPanel = new JPanel(new BorderLayout(5, 5));
 
-        // ======= PANEL FORM =======
-        JPanel formPanel = new JPanel(new GridLayout(5, 2, 10, 10));
+        // Form panel
+        JPanel formPanel = new JPanel(new GridLayout(4, 2, 10, 10));
         formPanel.setBorder(BorderFactory.createTitledBorder("Thông tin báo cáo"));
 
         cboKho = new JComboBox<>();
         cboVatTu = new JComboBox<>();
         txtSoLuong = new JTextField();
-        txtNgayBaoCao = new JFormattedTextField(java.time.LocalDate.now());
+        txtNgayBaoCao = new JFormattedTextField(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd").format(java.time.LocalDate.now()));
 
         formPanel.add(new JLabel("Kho:"));
         formPanel.add(cboKho);
-
         formPanel.add(new JLabel("Vật tư:"));
         formPanel.add(cboVatTu);
-
         formPanel.add(new JLabel("Số lượng:"));
         formPanel.add(txtSoLuong);
-
         formPanel.add(new JLabel("Ngày báo cáo:"));
         formPanel.add(txtNgayBaoCao);
 
-        // ======= PANEL BUTTON =======
-        JPanel buttonPanel = new JPanel();
+        // Button panel
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         btnThem = new JButton("Thêm");
         btnSua = new JButton("Sửa");
         btnXoa = new JButton("Xóa");
@@ -65,6 +58,11 @@ public class BaoCaoTonKhoView extends JFrame {
         buttonPanel.add(btnXoa);
         buttonPanel.add(btnReset);
 
+        topPanel.add(formPanel, BorderLayout.CENTER);
+        topPanel.add(buttonPanel, BorderLayout.SOUTH);
+
+        add(topPanel, BorderLayout.NORTH);
+
         // ======= TABLE =======
         tblModel = new DefaultTableModel(
                 new Object[]{"ID", "Kho", "Vật tư", "Số lượng", "Ngày báo cáo"}, 0
@@ -72,9 +70,6 @@ public class BaoCaoTonKhoView extends JFrame {
         tblTonKho = new JTable(tblModel);
         JScrollPane scrollPane = new JScrollPane(tblTonKho);
 
-        // Add components
-        add(formPanel, BorderLayout.NORTH);
-        add(buttonPanel, BorderLayout.CENTER);
-        add(scrollPane, BorderLayout.SOUTH);
+        add(scrollPane, BorderLayout.CENTER);
     }
 }

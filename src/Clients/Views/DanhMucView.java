@@ -13,6 +13,7 @@ public class DanhMucView extends JPanel {
 
     private final CoreController controller = new CoreController();
     private DefaultTableModel model;
+    private JTable table;
 
     public DanhMucView() {
         setLayout(new BorderLayout());
@@ -39,7 +40,7 @@ public class DanhMucView extends JPanel {
                 return false;
             }
         };
-        JTable table = new JTable(model);
+        table = new JTable(model);
         table.setFillsViewportHeight(true);
         add(new JScrollPane(table), BorderLayout.CENTER);
 
@@ -55,6 +56,10 @@ public class DanhMucView extends JPanel {
 
         loadData();
         btnRefresh.addActionListener(_ -> loadData());
+        
+        btnAdd.addActionListener(_ -> onAddProduct());
+        btnEdit.addActionListener(_ -> onEditProduct());
+        btnDelete.addActionListener(_ -> onDeleteProduct());
     }
 
     private void loadData() {
@@ -96,5 +101,85 @@ public class DanhMucView extends JPanel {
                         "Lỗi", JOptionPane.ERROR_MESSAGE);
             }
         });
+    }
+
+    private void onAddProduct() {
+        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
+        AddVatTuDialog dialog = new AddVatTuDialog(frame);
+        dialog.setVisible(true);
+        
+        VatTu result = dialog.getResult();
+        if (result != null) {
+            SwingUtilities.invokeLater(() -> {
+                String response = controller.themVatTu(result);
+                if (response.equals("Thành công")) {
+                    JOptionPane.showMessageDialog(this, "Thêm vật tư thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                    loadData();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Lỗi: " + response, "Lỗi", JOptionPane.ERROR_MESSAGE);
+                }
+            });
+        }
+    }
+
+    private void onEditProduct() {
+        int selectedRow = table.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn vật tư để sửa!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        // Lấy dữ liệu từ bảng
+        int id = (int) model.getValueAt(selectedRow, 0);
+        String tenVatTu = (String) model.getValueAt(selectedRow, 1);
+        String donViTinh = (String) model.getValueAt(selectedRow, 2);
+        double giaTien = (double) model.getValueAt(selectedRow, 3);
+        int soLuong = (int) model.getValueAt(selectedRow, 4);
+        String moTa = (String) model.getValueAt(selectedRow, 5);
+        int nccId = (int) model.getValueAt(selectedRow, 6);
+        int khoId = (int) model.getValueAt(selectedRow, 7);
+        String tinhTrangStr = (String) model.getValueAt(selectedRow, 9);
+        boolean tinhTrang = tinhTrangStr.equals("Tốt");
+
+        VatTu vatTu = new VatTu(id, tenVatTu, nccId, donViTinh, giaTien, soLuong, moTa, null, khoId, tinhTrang);
+
+        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
+        EditVatTuDialog dialog = new EditVatTuDialog(frame, vatTu);
+        dialog.setVisible(true);
+
+        VatTu result = dialog.getResult();
+        if (result != null) {
+            SwingUtilities.invokeLater(() -> {
+                String response = controller.suaVatTu(result);
+                if (response.equals("Thành công")) {
+                    JOptionPane.showMessageDialog(this, "Cập nhật vật tư thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                    loadData();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Lỗi: " + response, "Lỗi", JOptionPane.ERROR_MESSAGE);
+                }
+            });
+        }
+    }
+
+    private void onDeleteProduct() {
+        int selectedRow = table.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn vật tư để xóa!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        int confirm = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+        if (confirm == JOptionPane.YES_OPTION) {
+            int id = (int) model.getValueAt(selectedRow, 0);
+            SwingUtilities.invokeLater(() -> {
+                String response = controller.xoaVatTu(id);
+                if (response.equals("Thành công")) {
+                    JOptionPane.showMessageDialog(this, "Xóa vật tư thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                    loadData();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Lỗi: " + response, "Lỗi", JOptionPane.ERROR_MESSAGE);
+                }
+            });
+        }
     }
 }

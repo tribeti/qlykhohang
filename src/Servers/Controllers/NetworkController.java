@@ -33,32 +33,77 @@ public class NetworkController {
                 ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
                 ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream())
         ) {
-            String request = (String) ois.readObject();
-            if (request == null) {
-                return;
-            }
+            Object request = ois.readObject();
 
-            String[] parts = request.split("\\|", 3);
+            if (request instanceof String requestStr) {
+                String[] parts = requestStr.split("\\|", 3);
 
-            if (parts[0].equals("LOGIN")) {
-                if (parts.length >= 3) {
-                    String user = parts[1];
-                    String pass = parts[2];
+                switch (parts[0]) {
+                    case "LOGIN" -> {
+                        if (parts.length >= 3) {
+                            String user = parts[1];
+                            String pass = parts[2];
 
-                    User u = userController.Login(user, pass);
-                    if (u != null) {
-                        oos.writeObject("OK|" + u.getRole());
-                    } else {
-                        oos.writeObject("FAIL");
+                            User u = userController.Login(user, pass);
+                            if (u != null) {
+                                oos.writeObject("OK|" + u.getRole());
+                            } else {
+                                oos.writeObject("FAIL");
+                            }
+                        } else {
+                            oos.writeObject("FAIL");
+                        }
                     }
-                } else {
-                    oos.writeObject("FAIL");
+                    case "FETCH_PRODUCTS" -> {
+                        System.out.println("Server: Received FETCH_PRODUCTS request. Fetching data...");
+                        List<VatTu> danhSach = vatTuController.getDanhSachVatTu();
+                        System.out.println("Server: Found " + danhSach.size() + " products. Sending to client...");
+                        oos.writeObject(danhSach);
+                    }
+                    case "ADD_PRODUCT" -> {
+                        VatTu vatTu = (VatTu) ois.readObject();
+                        String result = vatTuController.themVatTu(
+                                vatTu.getTenVatTu(),
+                                vatTu.getNhaCungCapId(),
+                                vatTu.getDonViTinh(),
+                                String.valueOf(vatTu.getGiaTien()),
+                                String.valueOf(vatTu.getSoLuong()),
+                                vatTu.getMoTa(),
+                                vatTu.getNgayTao(),
+                                vatTu.getKhoId()
+                        );
+                        oos.writeObject(result);
+                    }
+                    case "UPDATE_PRODUCT" -> {
+                        VatTu vatTu = (VatTu) ois.readObject();
+                        String result = vatTuController.suaVatTu(
+                                vatTu.getId(),
+                                vatTu.getTenVatTu(),
+                                vatTu.getNhaCungCapId(),
+                                vatTu.getDonViTinh(),
+                                String.valueOf(vatTu.getGiaTien()),
+                                String.valueOf(vatTu.getSoLuong()),
+                                vatTu.getMoTa(),
+                                vatTu.getNgayTao(),
+                                vatTu.getKhoId(),
+                                vatTu.isTinhTrang()
+                        );
+                        oos.writeObject(result);
+                    }
+                    case "DELETE_PRODUCT" -> {
+                        if (parts.length > 1) {
+                            try {
+                                int id = Integer.parseInt(parts[1]);
+                                String result = vatTuController.xoaVatTu(id);
+                                oos.writeObject(result);
+                            } catch (NumberFormatException e) {
+                                oos.writeObject("Lỗi: ID không hợp lệ");
+                            }
+                        } else {
+                            oos.writeObject("Lỗi: Thiếu ID");
+                        }
+                    }
                 }
-            } else if (parts[0].equals("FETCH_PRODUCTS")) {
-                System.out.println("Server: Received FETCH_PRODUCTS request. Fetching data...");
-                List<VatTu> danhSach = vatTuController.getDanhSachVatTu();
-                System.out.println("Server: Found " + danhSach.size() + " products. Sending to client...");
-                oos.writeObject(danhSach);
             }
             oos.flush();
 

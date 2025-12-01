@@ -31,12 +31,14 @@ public class MainView extends JFrame {
 
         // Buttons
         JButton btnDanhMuc = new JButton("Quản lý danh mục thiết bị");
+        JButton btnKho = new JButton("Quản lý kho");
+        JButton btnNhaCungCap = new JButton("Quản lý nhà cung cấp");
         JButton btnXuatTon = new JButton("Quản lý xuất kho - tồn");
         JButton btnThongKe = new JButton("Thống kê");
         JButton btnLogout = new JButton("Đăng xuất");
         JButton btnQuanLyUser = getJButton(role);
 
-        for (JButton b : new JButton[]{btnDanhMuc, btnXuatTon, btnThongKe, btnLogout}) {
+        for (JButton b : new JButton[]{btnDanhMuc, btnKho, btnNhaCungCap, btnXuatTon, btnThongKe, btnLogout}) {
             b.setAlignmentX(Component.LEFT_ALIGNMENT);
             b.setMaximumSize(new Dimension(Integer.MAX_VALUE, 36));
             sideMenu.add(b);
@@ -50,12 +52,16 @@ public class MainView extends JFrame {
 
         // Add views
         DanhMucView danhMucView = new DanhMucView();
+        KhoView khoView = new KhoView();
+        NhaCungCapView nhaCungCapView = new NhaCungCapView();
         XuatTonView xuatTonView = new XuatTonView();
         ThongKeView thongKeView = new ThongKeView();
 
         contentPanel.add(danhMucView, "DanhMuc");
         contentPanel.add(xuatTonView, "XuatTon");
         contentPanel.add(thongKeView, "ThongKe");
+        contentPanel.add(khoView, "Kho");
+        contentPanel.add(nhaCungCapView, "NhaCungCap");
 
         // --- Layout Main Frame ---
         getContentPane().setLayout(new BorderLayout());
@@ -66,6 +72,8 @@ public class MainView extends JFrame {
         btnDanhMuc.addActionListener(_ -> cardLayout.show(contentPanel, "DanhMuc"));
         btnXuatTon.addActionListener(_ -> cardLayout.show(contentPanel, "XuatTon"));
         btnThongKe.addActionListener(_ -> cardLayout.show(contentPanel, "ThongKe"));
+        btnKho.addActionListener(_ -> cardLayout.show(contentPanel, "Kho"));
+        btnNhaCungCap.addActionListener(_ -> cardLayout.show(contentPanel, "NhaCungCap"));
 
         btnLogout.addActionListener(_ -> {
             this.dispose();

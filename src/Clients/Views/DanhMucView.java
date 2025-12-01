@@ -33,7 +33,7 @@ public class DanhMucView extends JPanel {
         add(top, BorderLayout.NORTH);
 
         // --- Table ---
-        String[] cols = {"Mã", "Tên vật tư", "Đơn vị tính", "Giá", "Số lượng", "Mô tả", "Nhà cung cấp", "Kho ID", "Ngày tạo", "Tình trạng"};
+        String[] cols = {"Mã", "Tên vật tư", "Đơn vị tính", "Giá", "Số lượng", "Mô tả", "Nhà cung cấp", "Kho ID", "Ngày chỉnh sửa", "Tình trạng"};
         model = new DefaultTableModel(cols, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -56,7 +56,7 @@ public class DanhMucView extends JPanel {
 
         loadData();
         btnRefresh.addActionListener(_ -> loadData());
-        
+
         btnAdd.addActionListener(_ -> onAddProduct());
         btnEdit.addActionListener(_ -> onEditProduct());
         btnDelete.addActionListener(_ -> onDeleteProduct());
@@ -107,7 +107,7 @@ public class DanhMucView extends JPanel {
         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
         AddVatTuDialog dialog = new AddVatTuDialog(frame);
         dialog.setVisible(true);
-        
+
         VatTu result = dialog.getResult();
         if (result != null) {
             SwingUtilities.invokeLater(() -> {

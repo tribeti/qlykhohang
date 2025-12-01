@@ -1,7 +1,7 @@
 package Servers.Controllers;
 
+import Common.Models.Kho;
 import Servers.DAOs.KhoDAO;
-import Servers.Models.Kho;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package Servers.DAOs;
 
-import Servers.Models.NhaCungCap;
+import Common.Models.NhaCungCap;
 import Servers.MySQLConnect;
 
 import java.sql.Connection;
@@ -74,7 +74,7 @@ public class NhaCungCapDAO {
 
         try (Connection conn = MySQLConnect.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-            
+
             stmt.setInt(1, id);
             return stmt.executeUpdate() > 0;
         } catch (Exception e) {

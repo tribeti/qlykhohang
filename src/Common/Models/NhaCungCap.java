@@ -1,6 +1,12 @@
-package Servers.Models;
+package Common.Models;
 
-public class NhaCungCap {
+import java.io.Serial;
+import java.io.Serializable;
+
+public class NhaCungCap implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     private int id;
     private String tenNhaCungCap;
     private String email;

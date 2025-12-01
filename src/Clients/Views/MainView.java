@@ -31,13 +31,12 @@ public class MainView extends JFrame {
 
         // Buttons
         JButton btnDanhMuc = new JButton("Quản lý danh mục thiết bị");
-        JButton btnNhapKho = new JButton("Quản lý nhập kho");
         JButton btnXuatTon = new JButton("Quản lý xuất kho - tồn");
         JButton btnThongKe = new JButton("Thống kê");
         JButton btnLogout = new JButton("Đăng xuất");
         JButton btnQuanLyUser = getJButton(role);
 
-        for (JButton b : new JButton[]{btnDanhMuc, btnNhapKho, btnXuatTon, btnThongKe, btnLogout}) {
+        for (JButton b : new JButton[]{btnDanhMuc, btnXuatTon, btnThongKe, btnLogout}) {
             b.setAlignmentX(Component.LEFT_ALIGNMENT);
             b.setMaximumSize(new Dimension(Integer.MAX_VALUE, 36));
             sideMenu.add(b);
@@ -51,12 +50,10 @@ public class MainView extends JFrame {
 
         // Add views
         DanhMucView danhMucView = new DanhMucView();
-        NhapKhoView nhapKhoView = new NhapKhoView();
         XuatTonView xuatTonView = new XuatTonView();
         ThongKeView thongKeView = new ThongKeView();
 
         contentPanel.add(danhMucView, "DanhMuc");
-        contentPanel.add(nhapKhoView, "NhapKho");
         contentPanel.add(xuatTonView, "XuatTon");
         contentPanel.add(thongKeView, "ThongKe");
 
@@ -67,7 +64,6 @@ public class MainView extends JFrame {
 
         // Button listeners - chỉ cần gọi cardLayout.show()
         btnDanhMuc.addActionListener(_ -> cardLayout.show(contentPanel, "DanhMuc"));
-        btnNhapKho.addActionListener(_ -> cardLayout.show(contentPanel, "NhapKho"));
         btnXuatTon.addActionListener(_ -> cardLayout.show(contentPanel, "XuatTon"));
         btnThongKe.addActionListener(_ -> cardLayout.show(contentPanel, "ThongKe"));
 
